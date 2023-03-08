@@ -15,31 +15,26 @@ body {
     width: 750px;
     height: 550px;
     margin: 0 auto;
+    grid-template-columns: repeat(4, auto);
     justify-content: center;
     gap: 5px;
-    border: 3px solid burlywood;
-
-
-
     
-    /*display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(4, auto);
-    gap: 5px;*/
+
 
     /*grid-template-rows: 120px 120px 120px 120px;
     grid-template-columns: 120px 120px 120px 120px;*/
-}
-
-/*.card {
-    
-    background-color: rgb(195, 193, 193);
-    width: 130px;
-    height: 130px;
 }
 
 .card:hover {
     box-sizing: border-box;
     box-shadow: inset 0px 0px 0px 2px red;
 }
-*/
+
+.card {
+    background-color: rgb(195, 193, 193);
+    width: 130px;
+    height: 130px;
+}
+
+
+

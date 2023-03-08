@@ -20,7 +20,7 @@ for (let i = 0; i < cardsArr.length; i++) {
     let card = document.createElement('img');
     card.setAttribute('src', 'css/images/questionmark.png');
     card.setAttribute('data-id', i);
-
+    card.classList.add("card") //css class .card
     myGrid.appendChild(card);
 
     card.addEventListener('click', showCard)
@@ -34,7 +34,7 @@ function showCard() {
     const cardSelected = [];
     let cardId = this.getAttribute('data-id');
     this.setAttribute('src', cardsArr[cardId].image);
-    //we're pushing the name of the array into the card selected
+    //pushing the name of the array into the card selected
     cardSelected.push(cardsArr[cardId].name);
 
     
