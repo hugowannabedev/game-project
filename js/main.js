@@ -1,19 +1,17 @@
 //Array of cards
 
 const cardsArr = [
-   {name: "a", image: "css/images/a.png"},
-   {name: "b", image: "css/images/b.png"},
-   {name: "c", image: "css/images/c.png"},
-   {name: "d", image: "css/images/d.png"},
-   {name: "a", image: "css/images/a.png"},
-   {name: "b", image: "css/images/b.png"},
-   {name: "c", image: "css/images/c.png"},
-   {name: "d", image: "css/images/d.png"}
+   {name: "a", checked: false, image: "css/images/a.png"},
+   {name: "b", checked: false, image: "css/images/b.png"},
+   {name: "c", checked: false, image: "css/images/c.png"},
+   {name: "d", checked: false, image: "css/images/d.png"},
+   {name: "a", checked: false, image: "css/images/a.png"},
+   {name: "b", checked: false, image: "css/images/b.png"},
+   {name: "c", checked: false, image: "css/images/c.png"},
+   {name: "d", checked: false, image: "css/images/d.png"}
 ];
 console.log(cardsArr)
 
-
-//const cards = document.getElementsByClassName('grid')
 const myGrid = document.querySelector('.grid');
 
 for (let i = 0; i < cardsArr.length; i++) {
@@ -24,21 +22,61 @@ for (let i = 0; i < cardsArr.length; i++) {
     myGrid.appendChild(card);
 
     card.addEventListener('click', showCard)
-
-
-    
 }
 
+let isFirstAttempt = true;
+let firstAttempt = null;
+let firstCardElement = null;
 
 function showCard() {
-    const cardSelected = [];
-    let cardId = this.getAttribute('data-id');
-    this.setAttribute('src', cardsArr[cardId].image);
-    //pushing the name of the array into the card selected
-    cardSelected.push(cardsArr[cardId].name);
-
+    const cardId = this.getAttribute('data-id');
     
-    //console.log(cardsArr[cardId].name);
-    //console.log('CLICKED', cardId);
+    if (isFirstAttempt) { //checking if it's the first attempt
+        firstCardElement = this; // in order to reuse the 'this', is being kept in a variable
+        firstAttempt = cardsArr[cardId];
+        firstAttempt.checked = true;
+        this.setAttribute('src', firstAttempt.image);
+        isFirstAttempt = false;
+        console.log('firstAttempt')
+    }else {
+        const secondAttempt = cardsArr[cardId];
+        //show image of second attempt
+        this.setAttribute('src', secondAttempt.image);
+        console.log('secondAttempt')
+        
+        
+            if (firstAttempt.name === secondAttempt.name) {
+                //if (firstAttempt.checked === true) {  
+                    secondAttempt.checked = true;
+                    console.log('secondAttempt.checked = true')
+                    let areAllChecked = true; //we're assuming that all cards are checked
+                    for (let i = 0; i < cardsArr.length; i++) {
+                        if (cardsArr[i].checked === false) {
+                            areAllChecked = false;
+                        }
+                    }
+                    if (areAllChecked) {
+                        console.log('game over')
+                    }
+                //}
+                
+            }
+            else {
+                setTimeout (() => {
+                    firstAttempt.checked = false;
+                    this.setAttribute('src', 'css/images/questionmark.png');
+                    firstCardElement.setAttribute('src', 'css/images/questionmark.png');
+                    console.log('changing image to questionmark')
+                }, 1000)
+                console.log('firstAttempt = false')
+                //turn back the image
+            }    
+        
+        isFirstAttempt = true;
+        console.log(cardsArr)
+    }
+    
+    
+    
 }
 
