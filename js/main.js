@@ -23,16 +23,21 @@ for (let i = 0; i < cardsArr.length; i++) {
     card.classList.add("card") //css class .card
     myGrid.appendChild(card);
     
-    card.addEventListener('click', showCard)
+    card.addEventListener('click', showCard);
 }
 
 
 let isFirstAttempt = true;
 let firstAttempt = null;
 let firstCardElement = null;
+let disableClick = false;
 
 function showCard() {
     const cardId = this.getAttribute('data-id');
+
+    if (disableClick) {
+        return;
+    }
     
     if (isFirstAttempt) { //checking if it's the first attempt
         firstCardElement = this; // in order to reuse the 'this', is being kept in a variable
@@ -50,6 +55,7 @@ function showCard() {
         
         if (firstAttempt.name === secondAttempt.name) { 
             secondAttempt.checked = true;
+            card.removeEventListener('click', showCard);
             console.log('secondAttempt.checked = true')
             let areAllChecked = true; //we're assuming that all cards are checked
             for (let i = 0; i < cardsArr.length; i++) {
@@ -62,17 +68,20 @@ function showCard() {
                 const endElement = document.getElementById("end");
                 console.log(endElement)
                 endElement.innerText = "Not bad my friend... Press the button start again";
-
-                restartButton(); //calling the 
+                
+                restart(); //calling the function
             }
             
         }
          else {
+
+            disableClick = true;
             setTimeout (() => {
                 firstAttempt.checked = false;
                 this.setAttribute('src', 'css/images/questionmark.png');
                 firstCardElement.setAttribute('src', 'css/images/questionmark.png');
-                console.log('image back to questionmark')
+                console.log('image back to questionmark');
+                disableClick = false;
              }, 1000)
             console.log('firstAttempt = false')
             //turn back the image
@@ -85,18 +94,19 @@ function showCard() {
 }
 
  //game restart section
- restartButton = document.getElementById("restart");
- restartButton.addEventListener("click", () => {
-    console.log('restart')
+ function restart () {
+    const restartButton = document.getElementById("restart");
+    restartButton.addEventListener("click", () => {
+        console.log('restart')
 
-    for (let i = 0; i < cardsArr.length; i++) {
-        let card = document.createElement('img');
-        card.setAttribute('src', 'css/images/questionmark.png');
-        card.setAttribute('data-id', i);
-        card.classList.add("card") //css class .card
-        myGrid.appendChild(card);
-        
-    }
+        const cardsReset = document.getElementsByClassName("card");
+        for (let i = 0; i < cardsReset.length; i++) {
+            cardsReset[i].setAttribute('src', 'css/images/questionmark.png')
 
- })
+            cardsReset.addEventListener("click", showCard);
+        }
+
+    })
+ }
+ 
 
