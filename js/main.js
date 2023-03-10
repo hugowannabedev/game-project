@@ -7,10 +7,14 @@ const cardsArr = [
    {name: "b", checked: false, image: "css/images/b.png"},
    {name: "c", checked: false, image: "css/images/c.png"},
    {name: "d", checked: false, image: "css/images/d.png"},
+   {name: "e", checked: false, image: "css/images/e.png"},
+   {name: "f", checked: false, image: "css/images/f.png"},
    {name: "a", checked: false, image: "css/images/a.png"},
    {name: "b", checked: false, image: "css/images/b.png"},
    {name: "c", checked: false, image: "css/images/c.png"},
-   {name: "d", checked: false, image: "css/images/d.png"}
+   {name: "d", checked: false, image: "css/images/d.png"},
+   {name: "e", checked: false, image: "css/images/e.png"},
+   {name: "f", checked: false, image: "css/images/f.png"}
 ];
 console.log(cardsArr)
 
@@ -55,7 +59,7 @@ function showCard() {
         
         if (firstAttempt.name === secondAttempt.name) { 
             secondAttempt.checked = true;
-            card.removeEventListener('click', showCard);
+            this.removeEventListener('click', showCard);
             console.log('secondAttempt.checked = true')
             let areAllChecked = true; //we're assuming that all cards are checked
             for (let i = 0; i < cardsArr.length; i++) {
@@ -67,9 +71,10 @@ function showCard() {
                 console.log('game over')
                 const endElement = document.getElementById("end");
                 console.log(endElement)
-                endElement.innerText = "Not bad my friend... Press the button start again";
-                
-                restart(); //calling the function
+                endElement.classList.remove("hidden");
+                endElement.innerText = "Not bad my friend... Press the restart and paying again";
+                //alert('Great job!');
+                restart(); //calling the function in order to reset the game
             }
             
         }
@@ -99,13 +104,16 @@ function showCard() {
     restartButton.addEventListener("click", () => {
         console.log('restart')
 
+        const endElement = document.getElementById("end");
+        endElement.classList.add("hidden");
+
         const cardsReset = document.getElementsByClassName("card");
         for (let i = 0; i < cardsReset.length; i++) {
             cardsReset[i].setAttribute('src', 'css/images/questionmark.png')
-
-            cardsReset.addEventListener("click", showCard);
+            cardsReset[i].addEventListener("click", showCard);
+            cardsArr[i].checked = false;
+            
         }
-
     })
  }
  
