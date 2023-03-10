@@ -1,7 +1,7 @@
 
 
-
 //Array of cards
+
 const cardsArr = [
    {name: "a", checked: false, image: "css/images/a.png"},
    {name: "b", checked: false, image: "css/images/b.png"},
@@ -18,9 +18,16 @@ const cardsArr = [
 ];
 console.log(cardsArr)
 
+//to randomize the cards
+function shuffle () {
+    cardsArr.sort(() => 0.5 - Math.random());
+} 
+
+
 const myGrid = document.querySelector('.grid');
 
 for (let i = 0; i < cardsArr.length; i++) {
+    
     let card = document.createElement('img');
     card.setAttribute('src', 'css/images/questionmark.png');
     card.setAttribute('data-id', i);
@@ -69,12 +76,14 @@ function showCard() {
             }
             if (areAllChecked) { //which means that all the pairs were found
                 console.log('game over')
-                const endElement = document.getElementById("end");
-                console.log(endElement)
-                endElement.classList.remove("hidden");
-                endElement.innerText = "Not bad my friend... Press the restart and paying again";
-                //alert('Great job!');
+                //const endElement = document.getElementById("end");
+                //console.log(endElement)
+                //endElement.classList.remove("hidden");
+                //endElement.innerText = "Not bad my friend... Press the button and play again";
+                
                 restart(); //calling the function in order to reset the game
+                shuffle(); //
+                alert('Not bad my friend... Press RESTART and play again');
             }
             
         }
@@ -104,8 +113,8 @@ function showCard() {
     restartButton.addEventListener("click", () => {
         console.log('restart')
 
-        const endElement = document.getElementById("end");
-        endElement.classList.add("hidden");
+        //const endElement = document.getElementById("end");
+        //endElement.classList.add("hidden");
 
         const cardsReset = document.getElementsByClassName("card");
         for (let i = 0; i < cardsReset.length; i++) {
